@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Kitten" basedir="." default="run-compiled-code" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<!-- load the properties stored into the external file -->
+	<property file="build.properties" />
+
+	<target name="clean-bin">
+		<delete dir="${build.out.folder}" />
+	</target>
+
+	<target name="generate-lexical-analyzer" depends="clean-bin">
+		<mkdir dir="${build.out.folder}" />
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${lexical.generator.source}" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		<java classname="${lexical.generator}">
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="compile-lexical-analyzer" depends="generate-lexical-analyzer">
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${lexical.package}/*.java" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="run-lexical-analyzer" depends="compile-lexical-analyzer">
+		<java classname="${lexical.package}.Main" fork="yes" dir="${kitten.example.dir}" >
+		    <arg value="${kitten.example}.kit" />
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="generate-syntactical-analyzer" depends="compile-lexical-analyzer">
+		<mkdir dir="${build.out.folder}" />
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${syntactical.generator.source}" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		<java classname="${syntactical.generator}">
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+		<move file="Parser.java" todir="src/${syntactical.package}"/>
+		<move file="sym.java" todir="src/${syntactical.package}"/>
+	</target>
+
+	<target name="compile-syntactical-analyzer" depends="generate-syntactical-analyzer">
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${syntactical.package}/*.java" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="run-syntactical-analyzer" depends="compile-syntactical-analyzer">
+		<java classname="${syntactical.package}.Main" fork="yes" dir="${kitten.example.dir}" >
+		    <arg value="${kitten.example}.kit" />
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="compile-semantical-analyzer" depends="compile-syntactical-analyzer">
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${semantical.package}/*.java" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="run-semantical-analyzer" depends="compile-semantical-analyzer">
+		<java classname="${semantical.package}.Main" fork="yes" dir="${kitten.example.dir}" >
+		    <arg value="${kitten.example}.kit" />
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="compile-kitten-bytecode-generator" depends="compile-semantical-analyzer">
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${kitten.bytecode.generator.package}/*.java" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="run-kitten-bytecode-generator" depends="compile-kitten-bytecode-generator">
+		<java classname="${kitten.bytecode.generator.package}.Main" fork="yes" dir="${kitten.example.dir}" >
+		    <arg value="${kitten.example}.kit" />
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="compile-java-bytecode-generator" depends="compile-kitten-bytecode-generator">
+		<javac includeantruntime="false" srcdir="${build.in.folder}" destdir="${build.out.folder}" encoding="utf8" debug="on" debuglevel="lines,vars,source">
+			<include name="${java.bytecode.generator.package}/*.java" />
+			<classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="run-java-bytecode-generator" depends="compile-java-bytecode-generator">
+		<java classname="${java.bytecode.generator.package}.Main" fork="yes" dir="${kitten.example.dir}" >
+		    <arg value="${kitten.example}.kit" />
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+            </classpath>
+            <classpath>
+				<fileset dir="${build.lib.folder}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="run-compiled-code" depends="run-java-bytecode-generator">
+		<java classname="${kitten.example}" >
+            <classpath>
+                <pathelement location="${build.out.folder}"/>
+                <pathelement location="${kitten.example.dir}"/>
+            </classpath>
+		</java>
+	</target>
+	
+	<target name="run-test-code" depends="run-java-bytecode-generator">
+		<java classname="${kitten.example}Test">
+			<classpath>
+				<pathelement location="${build.out.folder}" />
+				<pathelement location="${kitten.example.dir}" />
+			</classpath>
+		</java>
+	</target>
+
+</project>

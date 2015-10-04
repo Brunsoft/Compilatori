@@ -1,0 +1,17 @@
+class Fibonacci {
+  constructor() {}
+
+  method int fib(int n)
+    if (n = 0 | n = 1) then return 1
+    else return this.fib(n - 1) + this.fib(n - 2)
+
+  method void main() {
+    String s := new String();
+
+    "Insert a relatively small number: ".output();
+    s.input();
+    "Fibonacci(".concat(s).concat(") = ".concat
+	(new Fibonacci().fib(s.toInt()))).output();
+    "\n".output()
+  }
+}

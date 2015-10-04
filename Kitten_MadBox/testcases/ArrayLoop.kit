@@ -1,0 +1,10 @@
+class ArrayLoop {
+
+  method void main() {
+    array of Object arr := new array of Object [10];
+    arr[0] := new array of Object [10];
+
+    while (arr[0] != nil)
+      arr := arr[0] as array of Object
+  }
+}

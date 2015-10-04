@@ -1,0 +1,4 @@
+digraph "Object()" {
+size = "11,7.5";
+codeblock_1 [ shape = box, label = "block 1\nreturn void"];
+}

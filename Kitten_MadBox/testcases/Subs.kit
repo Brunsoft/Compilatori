@@ -1,0 +1,23 @@
+class Subs {
+  field int channels
+  field Subs next
+
+  constructor() {}
+
+  constructor(int channels, Subs next) {
+    this.channels := channels;
+    this.next := next
+  }
+
+  method int monthlyCost()
+    return this.channels / 2
+
+  method ForeignSubs foreigners() {
+    Subs temp := this.next;
+    if (temp = nil) then return nil
+    else return temp.foreigners()
+  }
+
+  method void main()
+    Subs copy := new Subs().foreigners()
+}

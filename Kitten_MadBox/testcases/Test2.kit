@@ -1,0 +1,13 @@
+class Test2 {
+  field Test2 f
+
+  constructor(Test2 f)
+    this.f := f
+
+  constructor() {}
+
+  method void main() {
+    Test2 t := new Test2(new Test2());
+    t.f.f := t
+  }	
+}

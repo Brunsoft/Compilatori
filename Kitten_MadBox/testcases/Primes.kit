@@ -1,0 +1,40 @@
+class Primes {
+  field int next
+
+  constructor()
+    this.next := 2
+
+  constructor(int next)
+    this.next := next
+
+  method int getHead()
+    return this.next
+
+  method Primes getTail() {
+    int next := this.next + 1;
+
+    while (!this.isPrime(next))
+      next := next + 1;
+
+    return new Primes(next)
+  }
+
+  method boolean isPrime(int n) {
+    int divisor := 2;
+
+    while (divisor < n)
+      if ((n / divisor) * divisor = n) then return false
+      else divisor := divisor + 1;
+
+    return true
+  }
+
+  method void main() {
+    Primes p := new Primes();
+
+    for (int count := 1; count <= 100; count := count + 1) {
+      "".concat(p.getHead()).concat("\n").output();
+      p := p.getTail()
+    }
+  }
+}

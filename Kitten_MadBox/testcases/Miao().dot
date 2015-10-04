@@ -1,0 +1,4 @@
+digraph "Miao()" {
+size = "11,7.5";
+codeblock_0 [ shape = box, label = "block 0\nload 0 of type Miao\ncall Object() [Object()]\nreturn void"];
+}

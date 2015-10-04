@@ -1,0 +1,55 @@
+class Nullness {
+  field Nullness f
+  field Nullness g
+
+  constructor() {}
+
+  method Nullness getF()
+    return this.f
+
+  method int test1()
+    return 13
+
+  method int test2()
+    return 17
+
+  method int test3()
+    return 30
+
+  method int test4()
+    return 50
+
+  method int test5()
+    return 60
+
+  method void test6(Nullness n) {
+    Nullness p := new Nullness();
+    p.f := n;
+    p.f.test1()
+  }
+
+  method void main() {
+    Nullness n := new Nullness();
+    if (n.f != nil) then n.f.test1();
+    if (n.getF() != nil) then n.getF().test2();
+    n.f := new Nullness();
+    n.f.test3();
+    n.f.g := new Nullness();
+    n.f.g.test4();
+    n.g.f.test4();
+    n.g.g.f.test8(n.test7());
+    n.test7().test9();
+    n.f := nil;
+    n.f.test5();
+    n.test6(new Nullness())
+  }
+
+  method Nullness test7() {
+    this.f := new Nullness();
+    return this.f
+  }
+
+  method void test8(Nullness n) {}
+
+  method void test9() {}
+}

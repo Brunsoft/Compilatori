@@ -1,0 +1,43 @@
+class Miao {
+
+/* ======= FIELD ======= */
+	
+	field String val
+
+
+/* ======= COSTRUTTORE ======= */
+	
+	constructor(){}
+	
+	
+/* ======= TEST ======= */
+	
+	test prima{
+		assert(this.val.equals("Test Prima"));
+		"\t- TestPrima ".concat(" OK\n").output()
+	}
+		
+	test seconda{
+		assert(this.val.equals("Test Seconda"));
+		"\t- TestSeconda ".concat(" OK\n").output()
+	}
+	
+	test terza{
+		assert("A".equals("A"))
+	} 	
+  	
+/* ======= FIXTURE ======= */
+	
+	fixture 
+  		this.val := "Test Prima"
+  		
+  	fixture 
+  		this.val := "Test Seconda"
+  	
+  	
+/* ======= MAIN ======= */
+	
+	method void main(){
+		"ClasseTest\n".output()
+	}
+}

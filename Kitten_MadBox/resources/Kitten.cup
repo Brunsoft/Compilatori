@@ -1,0 +1,295 @@
+package syntactical;
+
+/**
+ * A syntactical analyser.
+ *
+ * This Java code is automatically generated from the file
+ * {@code resources/Kitten.cup} through the JavaCup utility.
+ * The following author hence is not completely responsible for its content.
+ *
+ * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
+ */
+
+import absyn.*;
+import errorMsg.ErrorMsg;
+import lexical.Lexer;
+
+parser code {:
+
+/**
+ * The lexical analyser used to preprocess the source file.
+ */
+
+  private Lexer lexer;
+
+/**
+ * Yields the error reporting utility used during parsing.
+ *
+ * @return the error reporting utility
+ */
+
+  public ErrorMsg getErrorMsg() {
+    return lexer.getErrorMsg();
+  }
+
+/**
+ * Reports a syntax error at a given token. This overrrides a method
+ * in the superclass which is called whenever a syntax error must be reported.
+ *
+ * @param token the token where the message should be signalled
+ */
+
+  public void syntax_error(java_cup.runtime.Symbol token) {
+    getErrorMsg().error(token.left, "syntax error");
+  }
+
+/**
+ * Builds a syntactical analyser which uses a given lexical analyser
+ * to tokenise the source file.
+ *
+ * @param lexer the lexical analyser which tokenises the input source file
+ */
+
+  public Parser(Lexer lexer) {
+    this.lexer = lexer;
+  }
+:};
+
+scan with {:
+  return lexer.nextToken();
+:};
+
+terminal String ID, STRING;
+terminal Integer INTEGER;
+terminal Float FLOATING;
+terminal CLASS, EXTENDS, FIELD, METHOD, CONSTRUCTOR, NEW,
+         INT, FLOAT, BOOLEAN, VOID,
+         COMMA, SEMICOLON, AS, LPAREN, RPAREN, 
+	 LBRACK, RBRACK, LBRACE, RBRACE, DOT, PLUS, MINUS, 
+	 TIMES, DIVIDE, EQ, NEQ, LT, LE, GT, GE, AND, OR, NOT,
+	 ASSIGN, ARRAYSYMBOL, IF, THEN, ELSE, WHILE, FOR, 
+	 RETURN, NIL, TRUE, FALSE, UMINUS, TEST, ASSERT, FIXTURE;
+
+
+//           abstract syntax class   non-terminal
+
+non terminal ClassDefinition         class;
+non terminal ClassMemberDeclaration  class_members;
+non terminal FormalParameters        formals;
+non terminal FormalParameters        formals_aux;
+non terminal Command                 com;
+non terminal Command                 comseq;
+non terminal Expression              exp;
+non terminal ExpressionSeq           expseq;
+non terminal ExpressionSeq           expseq_aux;
+non terminal Lvalue                  lvalue;
+non terminal TypeExpression          type;
+non terminal TypeExpression          typeplus;
+
+// This avoids to signal a conflict, which would anyway be correctly handled
+precedence nonassoc THEN;
+precedence nonassoc ELSE;
+
+// Standard operators precedences and associativities
+precedence left NOT;
+precedence left AND, OR;
+precedence nonassoc EQ, NEQ, LT, LE, GT, GE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence left UMINUS;
+
+// This lets  a < b.f and a < b[5] be interpreted correctly
+precedence left DOT, LBRACK;
+
+start with class;
+
+// leftvalues, i.e., what you can put on the left of an assignment
+
+lvalue ::=
+     ID:id
+     {: RESULT = new Variable(idleft, id); :}
+   | exp:receiver DOT:d ID:field
+     {: RESULT = new FieldAccess(dleft,receiver, field); :}
+   | exp:array LBRACK:b exp:index RBRACK
+     {: RESULT = new ArrayAccess(bleft,array,index); :} ;
+
+
+// Kitten value types. ID represents class types
+
+type ::=
+     ID:id
+     {: RESULT = new ClassTypeExpression(idleft, id); :}
+   | BOOLEAN:b
+     {: RESULT = new BooleanTypeExpression(bleft); :}
+   | INT:i
+     {: RESULT = new IntTypeExpression(ileft); :}
+   | FLOAT:f
+     {: RESULT = new FloatTypeExpression(fleft); :}
+   | type:t ARRAYSYMBOL:a
+     {: RESULT = new ArrayTypeExpression(aleft, t); :} ;
+
+
+// Kitten types including VOID
+
+typeplus ::=
+     type:t
+     {: RESULT = t; :}
+   | VOID:v
+     {: RESULT = new VoidTypeExpression(vleft); :} ;
+
+
+// a class definition
+
+class ::=
+     CLASS:c ID:name LBRACE class_members:declarations RBRACE
+     {: RESULT = new ClassDefinition
+	(cleft, name, "Object", declarations); :}
+   | CLASS:c ID:name EXTENDS ID:superclass
+       LBRACE class_members:declarations RBRACE
+     {: RESULT = new ClassDefinition
+	(cleft, name, superclass, declarations); :} ;
+
+
+// a sequence of fields, constructors or methods declarations
+
+class_members ::=
+     {: RESULT = null; :}
+   | FIELD:f type:t ID:name class_members:next
+     {: RESULT = new FieldDeclaration(fleft, t, name, next); :}
+   | CONSTRUCTOR:c LPAREN formals:formals RPAREN com:body
+       class_members:next
+     {: RESULT = new ConstructorDeclaration(cleft,formals,body,next); :}
+   | METHOD:m typeplus:returnType ID:name LPAREN formals:formals RPAREN
+       com:body class_members:next
+     {: RESULT = new MethodDeclaration
+	(mleft, returnType, name, formals, body, next); :}
+   | TEST:t ID:name com:body class_members:next
+     {: RESULT = new TestDeclaration(tleft, name, body, next); :}
+   | FIXTURE:f com:body class_members:next        
+     {: RESULT = new FixtureDeclaration(fleft, body, next); :};
+
+// a comma-separated and possibly empty list
+// of formal parameters of a method or constructor
+
+formals ::=
+     {: RESULT = null; :}
+   | formals_aux:f
+     {: RESULT = f; :} ;
+
+// a comma-separated, non-empty list
+// of formal parameters of a method or constructor
+
+formals_aux ::=
+     type:t ID:id
+     {: RESULT = new FormalParameters(tleft,t, id, null); :}
+   | type:t ID:id COMMA formals_aux:next
+     {: RESULT = new FormalParameters(tleft,t, id, next); :} ;
+
+// a command, i.e., something which does not yield any value
+
+com ::=
+     lvalue:leftvalue ASSIGN:a exp:rightvalue
+     {: RESULT = new Assignment(aleft,leftvalue,rightvalue); :}
+   | type:t ID:id ASSIGN exp:initialiser
+     {: RESULT = new LocalDeclaration(tleft,t, id, initialiser); :}
+   | RETURN:r
+     {: RESULT = new Return(rleft,null); :}
+   | RETURN:r exp:returned
+     {: RESULT = new Return(rleft,returned); :}
+   | IF:i LPAREN exp:condition RPAREN THEN com:then
+     {: RESULT = new IfThenElse(ileft,condition,then); :}
+   | IF:i LPAREN exp:condition RPAREN THEN com:then ELSE com:_else
+     {: RESULT = new IfThenElse(ileft,condition,then,_else); :}
+   | WHILE:w LPAREN exp:condition RPAREN com:body
+     {: RESULT = new While(wleft,condition,body); :}
+   | FOR:f LPAREN com:initialisation SEMICOLON
+       exp:condition SEMICOLON com:update RPAREN com:body
+     {: RESULT = new For(fleft,initialisation,condition,update,body); :}
+   | LBRACE:p comseq:c RBRACE
+     {: RESULT = new LocalScope(pleft,c); :}
+   | LBRACE:p RBRACE
+     {: RESULT = new Skip(pleft); :}
+   | exp:receiver DOT:d ID:name LPAREN expseq:actuals RPAREN
+     {: RESULT = new MethodCallCommand(dleft, receiver, name, actuals); :}
+   | ASSERT:a LPAREN exp:e RPAREN
+     {: RESULT = new Assert(aleft, e); :} ;
+
+// a non-empty sequence of commands
+
+comseq ::=
+     com:c
+     {: RESULT = c; :}
+   | com:f SEMICOLON:c comseq:s
+     {: RESULT = new CommandSeq(cleft,f,s); :} ;
+
+// an expression, i.e., something which yields a value
+
+exp ::=
+     lvalue:lvalue
+     {: RESULT = lvalue; :}
+   | TRUE:t
+     {: RESULT = new True(tleft); :}
+   | FALSE:f
+     {: RESULT = new False(fleft); :}
+   | INTEGER:i
+     {: RESULT = new IntLiteral(ileft,i.intValue()); :}
+   | FLOATING:f
+     {: RESULT = new FloatLiteral(fleft,f.floatValue()) ; :}
+   | STRING:s
+     {: RESULT = new StringLiteral(sleft,s); :}
+   | NIL:n
+     {: RESULT = new Nil(nleft); :}
+   | NEW:n ID:id LPAREN expseq:actuals RPAREN
+     {: RESULT = new NewObject(nleft, id, actuals); :}
+   | NEW:n type:t LBRACK exp:size RBRACK
+     {: RESULT = new NewArray(nleft,t,size); :}
+   | exp:e AS:as type:t // un cast o una conversione di tipo
+     {: RESULT = new Cast(asleft,t,e); :}
+   | exp:left PLUS:p exp:right
+     {: RESULT = new Addition(pleft,left,right); :}
+   | exp:left MINUS:m exp:right
+     {: RESULT = new Subtraction(mleft,left,right); :}
+   | exp:left TIMES:t exp:right
+     {: RESULT = new Multiplication(tleft,left,right); :}
+   | exp:left DIVIDE:d exp:right
+     {: RESULT = new Division(dleft,left,right); :}
+   | MINUS:u exp:e
+     {: RESULT = new Minus(uleft,e); :} %prec UMINUS
+   | exp:left GE:o exp:right
+     {: RESULT = new GreaterThanOrEqual(oleft,left,right); :}
+   | exp:left LT:o exp:right
+     {: RESULT = new LessThan(oleft,left,right); :}
+   | exp:left LE:o exp:right
+     {: RESULT = new LessThanOrEqual(oleft,left,right); :}
+   | exp:left GT:o exp:right
+     {: RESULT = new GreaterThan(oleft,left,right); :}
+   | exp:left EQ:o exp:right
+     {: RESULT = new Equal(oleft,left,right); :}
+   | exp:left NEQ:o exp:right
+     {: RESULT = new NotEqual(oleft,left,right); :}
+   | exp:left AND:o exp:right
+     {: RESULT = new And(oleft,left,right); :}
+   | exp:left OR:o exp:right
+     {: RESULT = new Or(oleft,left,right); :}
+   | NOT:n exp:e
+     {: RESULT = new Not(nleft,e); :}
+   | exp:receiver DOT:d ID:name LPAREN expseq:actuals RPAREN
+     {: RESULT = new MethodCallExpression(dleft, receiver, name, actuals); :}
+   | LPAREN exp:e RPAREN
+     {: RESULT = e; :} ;
+
+
+// a comma-separated and possibly empty list of expressions
+
+expseq ::=
+     {: RESULT = null; :}
+   | expseq_aux:es
+     {: RESULT = es; :} ;
+
+// a comma-separated, non-empty list of expressions
+
+expseq_aux ::=
+     exp:head
+     {: RESULT = new ExpressionSeq(headleft,head,null); :}
+   | exp:head COMMA:c expseq_aux:tail
+     {: RESULT = new ExpressionSeq(cleft,head,tail); :} ;

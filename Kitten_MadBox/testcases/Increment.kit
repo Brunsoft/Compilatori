@@ -1,0 +1,28 @@
+class Increment {
+  method void main() {
+    Digit digit1 := new Digit();
+    Digit digit2 := new Digit();
+    boolean carry := false;
+
+    digit1.showDigit(3);
+    digit2.showDigit(9);
+
+    /* let us increment "digit1" */
+    "By incrementing\n".concat(digit1.toString()).concat("\n\nwe get:\n")
+	.output();
+
+    carry := digit1.increment();
+    digit1.toString().concat("\n\n").output();
+    if (carry) then "with carry\n\n".output()
+               else "without carry\n\n".output();
+
+    /* let us increment "digit2" */
+    "By incrementing\n".concat(digit2.toString()).concat("\n\nwe get:\n")
+	.output();
+
+    carry := digit2.increment();
+    digit2.toString().concat("\n\n").output();
+    if (carry) then "with carry\n".output()
+               else "without carry\n".output()
+  }
+}

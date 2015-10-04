@@ -1,0 +1,12 @@
+class Ambiguous {
+  constructor() {}
+  constructor(int i, float d) {}
+  constructor(float d, int i) {}
+
+  /* if you uncomment the following line, the constructor call
+     becomes unambiguous */
+  /* constructor(int i2, int i2) {} */
+
+  method void main()
+    Object o := new Ambiguous(3,4)
+}

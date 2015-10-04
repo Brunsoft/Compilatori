@@ -1,0 +1,57 @@
+class List {
+
+  field int head
+
+  field List tail
+
+  constructor(int head, List tail) {
+    this.head := head;
+    this.tail := tail
+  }
+
+  /* yields a list which is the concatenation of this and other */
+  method List append(List l1)
+    if (this.tail = nil) then return new List(this.head,l1)
+    else return new List(this.head, this.tail.append(l1))
+
+  /* naive reverse */
+  method List reverse()
+    if (this.tail = nil) then return this
+    else return this.tail.reverse().append(new List(this.head,nil))
+
+  /* accumulator reverse */
+  method List reverseAcc()
+    return this.reverseAux(new List(this.head, nil))
+
+  method List reverseAux(List acc)
+    if (this.tail = nil) then return acc
+    else return this.tail.reverseAux(new List(this.head,acc))
+
+  /* iterative length */
+  method int length() {
+    List l1 := this;
+    int l2 := 0;
+
+    while (l1 != nil) {
+      l2 := l2 + 1;
+      l1 := l1.tail
+    };
+
+    return l2
+  }
+
+  method List clone()
+    if (this.tail = nil) then return new List(this.head,nil)
+    else return new List(this.head,this.tail.clone())
+
+  method void main() {
+    List l0 := new List(3,nil);
+    List l1 := new List(5,nil);
+    l1.tail := l1;
+    List l2 := l0.append(l1);
+    List l3 := l0.reverse();
+    List l4 := l0.reverseAcc();
+    int  l5 := l0.length();
+    List l6 := l0.clone()
+  }
+}

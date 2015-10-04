@@ -1,0 +1,17 @@
+class Led {
+  field boolean state
+
+  constructor() {}
+
+  method void on()
+    this.state := true
+
+  method void off()
+    this.state := false
+
+  method boolean isOn()
+    return this.state
+
+  method boolean isOff()
+    return !this.state
+}

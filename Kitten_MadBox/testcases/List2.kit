@@ -1,0 +1,64 @@
+class List2 {
+
+  field Object head
+
+  field List2 tail
+
+  constructor(Object head, List2 tail) {
+    this.head := head;
+    this.tail := tail
+  }
+
+  /* yields a list which is the concatenation of this and other */
+  method List2 append(List2 l1)
+    if (this.tail = nil) then return new List2(this.head,l1)
+    else {
+	/*this.share(l1);*/
+	return new List2(this.head,this.tail.append(l1))
+	/*return this.tail.append(l1)*/
+    }
+
+  method void share(List2 other)
+    other.tail := this
+
+  /* naive reverse */
+  method List2 reverse()
+    if (this.tail = nil) then return this
+    else return this.tail.reverse().append(new List2(this.head,nil))
+
+  /* accumulator reverse */
+  method List2 reverseAcc()
+    return this.reverseAux(new List2(this.head,nil))
+
+  method List2 reverseAux(List2 acc)
+    if (this.tail = nil) then return acc
+    else return this.tail.reverseAux(new List2(this.head,acc))
+
+  /* iterative length */
+  method int length() {
+    List2 l1 := this;
+    int l2 := 0;
+
+    while (l1 != nil) {
+      l2 := l2 + 1;
+      l1 := l1.tail
+    };
+
+    return l2
+  }
+
+  method List2 clone()
+    if (this.tail = nil) then return new List2(this.head,nil)
+    else return new List2(this.head,this.tail.clone())
+
+  method void main() {
+    List2 l0 := new List2(new Object(),nil);
+    List2 l1 := new List2(new Object(),nil);
+    l1.tail := l1;
+    List2 l2 := l0.append(l1);
+    List2 l3 := l0.reverse();
+    List2 l4 := l0.reverseAcc();
+    int l5 := l0.length();
+    List2 l6 := l0.clone()
+  }
+}

@@ -1,0 +1,44 @@
+/* This class implements Kitten strings. All constructors and methods are
+   implemented through native Java code inside runtime/String.java */
+
+class String {
+  /* yields the empty string */
+  constructor () {}
+
+  /* clones this string */
+  constructor(String other) {}
+
+  /* yields the length of this string */
+  method int length() return 0
+
+  /* translates this string into an integer */
+  method int toInt() return 0
+
+  /* translates this string into a float */
+  method float toFloat() return 0
+
+  /* tests string equality */
+  method boolean equals(String other) return false
+ 
+  /* prints this string to the standard output */
+  method void output() {}
+
+  /* reads a sequence of character from the standard input
+     (until the first newline character) and stores it in the string */
+  method void input() {}
+
+  /* yields the concatenation of this and then s */
+  method String concat(String s) return ""
+
+  /* yields the concatenation of this and then f */
+  method String concat(float f) return ""
+
+  /* yields the concatenation of this and then i */
+  method String concat(int i) return ""
+
+  /* yields the concatenation of this and then b */
+  method String concat(boolean b) return ""
+
+  /* yields the substring from start (included) to end (excluded) */
+  method String substring(int start, int end) return ""
+}

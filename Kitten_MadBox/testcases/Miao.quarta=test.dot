@@ -1,0 +1,15 @@
+digraph "Miao.quarta=test" {
+size = "11,7.5";
+codeblock_32 [ shape = box, label = "block 32\nload 0 of type Miao\ngetfield Miao.num:int\nconst 0"];
+codeblock_31 [ shape = box, label = "block 31\nif_cmpne int\nnewstring Numero non e' 0\nnewstring \\n\ncall String.concat(String):String [String.concat(String):String]\ncall String.output():void [String.output():void]"];
+codeblock_29 [ shape = box, label = "block 29\nload 0 of type Miao\nload 0 of type Miao\ngetfield Miao.num:int\nconst 1\nadd int\nputfield Miao.num:int\nconst true"];
+codeblock_28 [ shape = box, label = "block 28\nif_false\nnewstring failed at 41.3\nnewstring assert failed at 41.3\\n\ncall String.output():void [String.output():void]\nreturn String"];
+codeblock_29->codeblock_28 [color = blue label = "" fontsize = 8]
+codeblock_27 [ shape = box, label = "block 27\nif_true\nnewstring passed\nreturn String"];
+codeblock_29->codeblock_27 [color = blue label = "" fontsize = 8]
+codeblock_31->codeblock_29 [color = blue label = "" fontsize = 8]
+codeblock_32->codeblock_31 [color = blue label = "" fontsize = 8]
+codeblock_30 [ shape = box, label = "block 30\nif_cmpeq int\nnewstring Numero e' \nload 0 of type Miao\ngetfield Miao.num:int\ncall String.concat(int):String [String.concat(int):String]\nnewstring \\n\ncall String.concat(String):String [String.concat(String):String]\ncall String.output():void [String.output():void]"];
+codeblock_30->codeblock_29 [color = blue label = "" fontsize = 8]
+codeblock_32->codeblock_30 [color = blue label = "" fontsize = 8]
+}

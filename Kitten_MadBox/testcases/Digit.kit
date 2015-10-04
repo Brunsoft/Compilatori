@@ -1,0 +1,124 @@
+class Digit {
+  /* 7 leds let us show all digits as it follows:
+    
+         led1
+     led2    led3
+         led4
+     led5    led6
+         led7                */
+
+  field Led led1
+  field Led led2
+  field Led led3
+  field Led led4
+  field Led led5
+  field Led led6
+  field Led led7
+  field int digit
+
+  constructor() {
+    this.led1 := new Led();
+    this.led2 := new Led();
+    this.led3 := new Led();
+    this.led4 := new Led();
+    this.led5 := new Led();
+    this.led6 := new Led();
+    this.led7 := new Led();
+
+    this.showDigit(0)
+  }
+ 
+  /* turns leds on or off in order to show a digit */
+  method void showDigit(int digit) {
+    this.digit := digit;
+
+    if (this.digit = 0) then {
+      this.led1.on(); this.led2.on(); this.led3.on(); this.led4.off();
+      this.led5.on(); this.led6.on(); this.led7.on()
+    }
+    else if (this.digit = 1) then {
+      this.led1.off(); this.led2.off(); this.led3.on(); this.led4.off();
+      this.led5.off(); this.led6.on(); this.led7.off()
+    }
+    else if (this.digit = 2) then {
+      this.led1.on(); this.led2.off(); this.led3.on(); this.led4.on();
+      this.led5.on(); this.led6.off(); this.led7.on()
+    }
+    else if (this.digit = 3) then {
+      this.led1.on(); this.led2.off(); this.led3.on(); this.led4.on();
+      this.led5.off(); this.led6.on(); this.led7.on()
+    }
+    else if (this.digit = 4) then {
+      this.led1.off(); this.led2.on(); this.led3.on(); this.led4.on();
+      this.led5.off(); this.led6.on(); this.led7.off()
+    }
+    else if (this.digit = 5) then {
+      this.led1.on(); this.led2.on(); this.led3.off(); this.led4.on();
+      this.led5.off(); this.led6.on(); this.led7.on()
+    }
+    else if (this.digit = 6) then {
+      this.led1.on(); this.led2.on(); this.led3.off(); this.led4.on();
+      this.led5.on(); this.led6.on(); this.led7.on()
+    }
+    else if (this.digit = 7) then {
+      this.led1.on(); this.led2.off(); this.led3.on(); this.led4.off();
+      this.led5.off(); this.led6.on(); this.led7.off()
+    }
+    else if (this.digit = 8) then {
+      this.led1.on(); this.led2.on(); this.led3.on(); this.led4.on();
+      this.led5.on(); this.led6.on(); this.led7.on()
+    }
+    else if (this.digit = 9) then {
+      this.led1.on(); this.led2.on(); this.led3.on(); this.led4.on();
+      this.led5.off(); this.led6.on(); this.led7.on()
+    }
+    else "A digit must be between 0 and 9".output()
+  }
+
+  method boolean increment() {
+    this.digit := (this.digit + 1);
+    if (this.digit = 10) then this.digit := 0;
+
+    this.showDigit(this.digit);
+
+    return this.digit = 0
+  }
+
+  method String toString() {
+    String result := "";
+
+    if (this.led1.isOn()) then result := result.concat(" _\n")
+                          else result := result.concat("  \n");
+
+    if (this.led2.isOn()) then result := result.concat("|")
+                          else result := result.concat(" ");
+
+    if (this.led4.isOn()) then result := result.concat("_")
+                          else result := result.concat(" ");
+
+    if (this.led3.isOn()) then result := result.concat("|\n")
+                          else result := result.concat(" \n");
+
+    if (this.led5.isOn()) then result := result.concat("|")
+                          else result := result.concat(" ");
+
+    if (this.led7.isOn()) then result := result.concat("_")
+                          else result := result.concat(" ");
+
+    if (this.led6.isOn()) then result := result.concat("|")
+                          else result := result.concat(" ");
+
+    return result
+  }
+
+  /* a test method */
+  method void main() {
+    Digit digit := new Digit();
+
+    for (int i := 0; i <= 9; i := i + 1) {
+      digit.showDigit(i);
+      digit.toString().output();
+      "\n".output()
+    }
+  }
+}

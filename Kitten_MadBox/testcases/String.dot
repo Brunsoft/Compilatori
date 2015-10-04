@@ -1,0 +1,187 @@
+digraph String {
+size = "11,7.5";
+rotate = 90
+node96 [ label = "ClassDefinition"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node96 -> symbol_String [label = "name" fontsize = 8]
+symbol_Object [label = "Object" fontname = "Times-Italic" shape = box]
+node96 -> symbol_Object [label = "superclassName" fontsize = 8]
+node95 [ label = "ConstructorDeclaration"];
+node34 [ label = "Skip"];
+node95 -> node34 [label = "body" fontsize = 8]
+node94 [ label = "ConstructorDeclaration"];
+node36 [ label = "FormalParameters"];
+node35 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node35 -> symbol_String [label = "name" fontsize = 8]
+node36 -> node35 [label = "type" fontsize = 8]
+symbol_other [label = "other" fontname = "Times-Italic" shape = box]
+node36 -> symbol_other [label = "name" fontsize = 8]
+node94 -> node36 [label = "formals" fontsize = 8]
+node37 [ label = "Skip"];
+node94 -> node37 [label = "body" fontsize = 8]
+node93 [ label = "MethodDeclaration"];
+node38 [ label = "IntTypeExpression [int]"];
+node93 -> node38 [label = "returnType" fontsize = 8]
+symbol_length [label = "length" fontname = "Times-Italic" shape = box]
+node93 -> symbol_length [label = "name" fontsize = 8]
+node40 [ label = "Return"];
+node39 [ label = "IntLiteral [int]: 0"];
+node40 -> node39 [label = "returned" fontsize = 8]
+node93 -> node40 [label = "body" fontsize = 8]
+node92 [ label = "MethodDeclaration"];
+node41 [ label = "IntTypeExpression [int]"];
+node92 -> node41 [label = "returnType" fontsize = 8]
+symbol_toInt [label = "toInt" fontname = "Times-Italic" shape = box]
+node92 -> symbol_toInt [label = "name" fontsize = 8]
+node43 [ label = "Return"];
+node42 [ label = "IntLiteral [int]: 0"];
+node43 -> node42 [label = "returned" fontsize = 8]
+node92 -> node43 [label = "body" fontsize = 8]
+node91 [ label = "MethodDeclaration"];
+node44 [ label = "FloatTypeExpression [float]"];
+node91 -> node44 [label = "returnType" fontsize = 8]
+symbol_toFloat [label = "toFloat" fontname = "Times-Italic" shape = box]
+node91 -> symbol_toFloat [label = "name" fontsize = 8]
+node46 [ label = "Return"];
+node45 [ label = "IntLiteral [int]: 0"];
+node46 -> node45 [label = "returned" fontsize = 8]
+node91 -> node46 [label = "body" fontsize = 8]
+node90 [ label = "MethodDeclaration"];
+node47 [ label = "BooleanTypeExpression [boolean]"];
+node90 -> node47 [label = "returnType" fontsize = 8]
+symbol_equals [label = "equals" fontname = "Times-Italic" shape = box]
+node90 -> symbol_equals [label = "name" fontsize = 8]
+node49 [ label = "FormalParameters"];
+node48 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node48 -> symbol_String [label = "name" fontsize = 8]
+node49 -> node48 [label = "type" fontsize = 8]
+symbol_other [label = "other" fontname = "Times-Italic" shape = box]
+node49 -> symbol_other [label = "name" fontsize = 8]
+node90 -> node49 [label = "formals" fontsize = 8]
+node51 [ label = "Return"];
+node50 [ label = "False [boolean]"];
+node51 -> node50 [label = "returned" fontsize = 8]
+node90 -> node51 [label = "body" fontsize = 8]
+node89 [ label = "MethodDeclaration"];
+node52 [ label = "VoidTypeExpression [void]"];
+node89 -> node52 [label = "returnType" fontsize = 8]
+symbol_output [label = "output" fontname = "Times-Italic" shape = box]
+node89 -> symbol_output [label = "name" fontsize = 8]
+node53 [ label = "Skip"];
+node89 -> node53 [label = "body" fontsize = 8]
+node88 [ label = "MethodDeclaration"];
+node54 [ label = "VoidTypeExpression [void]"];
+node88 -> node54 [label = "returnType" fontsize = 8]
+symbol_input [label = "input" fontname = "Times-Italic" shape = box]
+node88 -> symbol_input [label = "name" fontsize = 8]
+node55 [ label = "Skip"];
+node88 -> node55 [label = "body" fontsize = 8]
+node87 [ label = "MethodDeclaration"];
+node56 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node56 -> symbol_String [label = "name" fontsize = 8]
+node87 -> node56 [label = "returnType" fontsize = 8]
+symbol_concat [label = "concat" fontname = "Times-Italic" shape = box]
+node87 -> symbol_concat [label = "name" fontsize = 8]
+node58 [ label = "FormalParameters"];
+node57 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node57 -> symbol_String [label = "name" fontsize = 8]
+node58 -> node57 [label = "type" fontsize = 8]
+symbol_s [label = "s" fontname = "Times-Italic" shape = box]
+node58 -> symbol_s [label = "name" fontsize = 8]
+node87 -> node58 [label = "formals" fontsize = 8]
+node60 [ label = "Return"];
+node59 [ label = "StringLiteral [String]: "];
+node60 -> node59 [label = "returned" fontsize = 8]
+node87 -> node60 [label = "body" fontsize = 8]
+node86 [ label = "MethodDeclaration"];
+node61 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node61 -> symbol_String [label = "name" fontsize = 8]
+node86 -> node61 [label = "returnType" fontsize = 8]
+symbol_concat [label = "concat" fontname = "Times-Italic" shape = box]
+node86 -> symbol_concat [label = "name" fontsize = 8]
+node63 [ label = "FormalParameters"];
+node62 [ label = "FloatTypeExpression [float]"];
+node63 -> node62 [label = "type" fontsize = 8]
+symbol_f [label = "f" fontname = "Times-Italic" shape = box]
+node63 -> symbol_f [label = "name" fontsize = 8]
+node86 -> node63 [label = "formals" fontsize = 8]
+node65 [ label = "Return"];
+node64 [ label = "StringLiteral [String]: "];
+node65 -> node64 [label = "returned" fontsize = 8]
+node86 -> node65 [label = "body" fontsize = 8]
+node85 [ label = "MethodDeclaration"];
+node66 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node66 -> symbol_String [label = "name" fontsize = 8]
+node85 -> node66 [label = "returnType" fontsize = 8]
+symbol_concat [label = "concat" fontname = "Times-Italic" shape = box]
+node85 -> symbol_concat [label = "name" fontsize = 8]
+node68 [ label = "FormalParameters"];
+node67 [ label = "IntTypeExpression [int]"];
+node68 -> node67 [label = "type" fontsize = 8]
+symbol_i [label = "i" fontname = "Times-Italic" shape = box]
+node68 -> symbol_i [label = "name" fontsize = 8]
+node85 -> node68 [label = "formals" fontsize = 8]
+node70 [ label = "Return"];
+node69 [ label = "StringLiteral [String]: "];
+node70 -> node69 [label = "returned" fontsize = 8]
+node85 -> node70 [label = "body" fontsize = 8]
+node84 [ label = "MethodDeclaration"];
+node71 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node71 -> symbol_String [label = "name" fontsize = 8]
+node84 -> node71 [label = "returnType" fontsize = 8]
+symbol_concat [label = "concat" fontname = "Times-Italic" shape = box]
+node84 -> symbol_concat [label = "name" fontsize = 8]
+node73 [ label = "FormalParameters"];
+node72 [ label = "BooleanTypeExpression [boolean]"];
+node73 -> node72 [label = "type" fontsize = 8]
+symbol_b [label = "b" fontname = "Times-Italic" shape = box]
+node73 -> symbol_b [label = "name" fontsize = 8]
+node84 -> node73 [label = "formals" fontsize = 8]
+node75 [ label = "Return"];
+node74 [ label = "StringLiteral [String]: "];
+node75 -> node74 [label = "returned" fontsize = 8]
+node84 -> node75 [label = "body" fontsize = 8]
+node83 [ label = "MethodDeclaration"];
+node76 [ label = "ClassTypeExpression [String]"];
+symbol_String [label = "String" fontname = "Times-Italic" shape = box]
+node76 -> symbol_String [label = "name" fontsize = 8]
+node83 -> node76 [label = "returnType" fontsize = 8]
+symbol_substring [label = "substring" fontname = "Times-Italic" shape = box]
+node83 -> symbol_substring [label = "name" fontsize = 8]
+node80 [ label = "FormalParameters"];
+node77 [ label = "IntTypeExpression [int]"];
+node80 -> node77 [label = "type" fontsize = 8]
+symbol_start [label = "start" fontname = "Times-Italic" shape = box]
+node80 -> symbol_start [label = "name" fontsize = 8]
+node79 [ label = "FormalParameters"];
+node78 [ label = "IntTypeExpression [int]"];
+node79 -> node78 [label = "type" fontsize = 8]
+symbol_end [label = "end" fontname = "Times-Italic" shape = box]
+node79 -> symbol_end [label = "name" fontsize = 8]
+node80 -> node79 [label = "next" fontsize = 8 style = bold]
+node83 -> node80 [label = "formals" fontsize = 8]
+node82 [ label = "Return"];
+node81 [ label = "StringLiteral [String]: "];
+node82 -> node81 [label = "returned" fontsize = 8]
+node83 -> node82 [label = "body" fontsize = 8]
+node84 -> node83 [label = "next" fontsize = 8 style = bold]
+node85 -> node84 [label = "next" fontsize = 8 style = bold]
+node86 -> node85 [label = "next" fontsize = 8 style = bold]
+node87 -> node86 [label = "next" fontsize = 8 style = bold]
+node88 -> node87 [label = "next" fontsize = 8 style = bold]
+node89 -> node88 [label = "next" fontsize = 8 style = bold]
+node90 -> node89 [label = "next" fontsize = 8 style = bold]
+node91 -> node90 [label = "next" fontsize = 8 style = bold]
+node92 -> node91 [label = "next" fontsize = 8 style = bold]
+node93 -> node92 [label = "next" fontsize = 8 style = bold]
+node94 -> node93 [label = "next" fontsize = 8 style = bold]
+node95 -> node94 [label = "next" fontsize = 8 style = bold]
+node96 -> node95 [label = "declarations" fontsize = 8]
+}

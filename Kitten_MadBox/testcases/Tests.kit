@@ -1,0 +1,23 @@
+class Tests {
+
+  constructor() {}
+
+  method void main() {
+    Tests t := new Tests();
+    int l1 := t.test1(10);
+    int l2 := t.test2(20);
+    int l3 := t.test3(8,9);
+    int l4 := t.fact(8)
+  }
+
+  method int test1(int x)
+    return x + 5
+
+  method int test2(int x)
+    if (x <= 0) then return 1
+    else return 1 + this.test2(x - 1)
+
+  method int test3(int x, int y)
+    if (x = 0 | y = 0) then return x + y
+    else return 2 + this.test3(x - 1,y - 1)
+}

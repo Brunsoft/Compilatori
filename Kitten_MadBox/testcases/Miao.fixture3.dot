@@ -1,0 +1,4 @@
+digraph "Miao.fixture3" {
+size = "11,7.5";
+codeblock_22 [ shape = box, label = "block 22\nload 0 of type Miao\nnewstring Cazzo!!\\n\nputfield Miao.val:String\nload 0 of type Miao\ngetfield Miao.val:String\ncall String.output():void [String.output():void]\nreturn void"];
+}

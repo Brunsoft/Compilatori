@@ -1,0 +1,4 @@
+digraph "Miao.fixture1" {
+size = "11,7.5";
+codeblock_18 [ shape = box, label = "block 18\nload 0 of type Miao\nnewstring Test Seconda\nputfield Miao.val:String\nreturn void"];
+}
