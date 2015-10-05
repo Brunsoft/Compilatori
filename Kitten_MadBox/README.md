@@ -1,7 +1,7 @@
 #Kitten
 
-di Luca Vicentini & Matteo Dal Monte
-
+di Luca Vicentini 
+ & Matteo Dal Monte
  & Kevin Mansoldo
 > Elaborato di Compilatori
 
