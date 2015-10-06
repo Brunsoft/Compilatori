@@ -317,7 +317,7 @@ public final class ClassType extends ReferenceType {
 	 * @param cSig the signature of the fixture
 	 */
 	
-	public void addFixture(FixtureSignature cSig) {
+	public final void addFixture(FixtureSignature cSig) {
 		fixtures.add(cSig);
 		
 	}
@@ -546,6 +546,7 @@ public final class ClassType extends ReferenceType {
 	 * @return the signature of the resulting signatures.
 	 *         Returns an empty set if no signature has been found
 	 */
+	
 	public final Set<FixtureSignature> fixtureLookup() {
 		return fixtures;
 	}

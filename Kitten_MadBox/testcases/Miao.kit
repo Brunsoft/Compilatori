@@ -12,27 +12,32 @@ class Miao {
 	
 /* ======= TEST ======= */
 	
-	test prima{
+	test prima{		
 		assert(this.val.equals("Test Prima"));
-		"\t- TestPrima ".concat(" OK\n").output()
+		"- TEST UNO ".concat(" OK\n").output()
 	}
 		
 	test seconda{
 		assert(this.val.equals("Test Seconda"));
-		"\t- TestSeconda ".concat(" OK\n").output()
+		"- TEST DUE ".concat(" OK\n").output()
 	}
 	
 	test terza{
-		assert("A".equals("A"))
+		assert("A".equals("A"));
+		"- TEST TRE ".concat(" OK\n").output()
 	} 	
   	
 /* ======= FIXTURE ======= */
 	
-	fixture 
-  		this.val := "Test Prima"
+	fixture{
+  		this.val := "Test Prima";
+  		"- fixture uno".concat(" \n").output()
+  	}
   		
-  	fixture 
-  		this.val := "Test Seconda"
+  	fixture{
+  		this.val := "Test Seconda";
+  		"- fixture due".concat(" \n").output()
+  	}
   	
   	
 /* ======= MAIN ======= */

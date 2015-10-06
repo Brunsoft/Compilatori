@@ -27,7 +27,7 @@ import types.TestSignature;
  * into Java bytecode that can be dumped to Java class files and run.
  * It uses the BCEL library to represent Java classes and dump them on the file-system.
  *
- * @author <A HREF="mailto:info@l0lc47.tk">L0LC47</A>
+ * @author <A HREF="mailto:info@MadBox.it">MaxBox</A>
  */
 
 
@@ -92,7 +92,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 		iList.append(getFactory().createNew(Type.STRINGBUFFER));
 		iList.append(InstructionFactory.DUP);
 		iList.append(new LDC(getConstantPool().
-				addString("\n \n \nTest execution for class " + this.clazz.getName() + "\n")));
+				addString("\nTest execution for class " + this.clazz.getName() + "\n")));
 		iList.append(getFactory().createInvoke("java.lang.StringBuffer", "<init>",
 	                Type.VOID, new Type[]{Type.STRING},
 	                Constants.INVOKESPECIAL));
@@ -105,31 +105,35 @@ public class TestClassGenerator extends JavaClassGenerator {
 			// concat test name to stringbuffer
 			ilTest.append(new LDC(getConstantPool().addString("\t- " + test.getName() + ": ")));
 			ilTest.append(getFactory().createInvoke("java.lang.StringBuffer", "append",
-	                Type.STRINGBUFFER, new Type[]{Type.STRING},
+	                Type.STRINGBUFFER, 
+	                new Type[]{Type.STRING},
 	                Constants.INVOKEVIRTUAL));
 
 			// create test
 			ilTest.append(instructionTest(test, clazz.getFixtures()));
+			
 			// result
 			ilTest.append(getFactory().createInvoke("runTime/String", "toString",
                 Type.STRING, Type.NO_ARGS,
 	                Constants.INVOKEVIRTUAL));
 			ilTest.append(InstructionFactory.DUP);
 
-			// (IF)
+			// confronto toString con passed
 			ilTest.append(new LDC(getConstantPool().addString("passed")));
 			ilTest.append(getFactory().createInvoke("java/lang/String", "equals",
-	                Type.BOOLEAN, new Type[]{Type.OBJECT},
+	                Type.BOOLEAN, 
+	                new Type[]{Type.OBJECT},
 	                Constants.INVOKEVIRTUAL));
 		
-			// add (THEN)
+			// if passed result = 1 -> INDEX + 1
 			ilTest.append(new ILOAD(count.getIndex()));
 			ilTest.append(InstructionFactory.IADD);
 			ilTest.append(new ISTORE(count.getIndex()));
 						
 			// concat test result to stringbuffer
 			ilTest.append(getFactory().createInvoke("java.lang.StringBuffer", "append",
-	                Type.STRINGBUFFER, new Type[]{Type.STRING},
+	                Type.STRINGBUFFER, 
+	                new Type[]{Type.STRING},
 	                Constants.INVOKEVIRTUAL));
 			
 			calcTime(ilTest, ilTest.getStart(), ilTest.getEnd(), testTime.getIndex());
@@ -158,7 +162,7 @@ public class TestClassGenerator extends JavaClassGenerator {
                 Type.STRINGBUFFER, new Type[]{Type.INT},
                 Constants.INVOKEVIRTUAL));
 		
-				iList.append(new LDC(getConstantPool().addString(" failed")));
+		iList.append(new LDC(getConstantPool().addString(" failed")));
 		iList.append(getFactory().createInvoke("java.lang.StringBuffer", "append",
                 Type.STRINGBUFFER, new Type[]{Type.STRING},
                 Constants.INVOKEVIRTUAL));
@@ -189,11 +193,11 @@ public class TestClassGenerator extends JavaClassGenerator {
 		// we add a method to the class that we are generating
 		this.addMethod(methodGen.getMethod());
 	}
-
+	// nanoTime
 	private InvokeInstruction currentMillis() {
 		return getFactory().createInvoke(
 				"java/lang/System", 
-				"currentTimeMillis", 
+				"currentTimeMillis",	
 				org.apache.bcel.generic.Type.LONG, 
 				new org.apache.bcel.generic.Type[]{},
 				org.apache.bcel.Constants.INVOKESTATIC
@@ -211,7 +215,7 @@ public class TestClassGenerator extends JavaClassGenerator {
 		dopo.append(currentMillis());				// getCurrentMillis LONG
 		dopo.append(InstructionConstants.L2I);		// current time INT
 		dopo.append(new ILOAD(index));				// <- index (start current time)				
-		dopo.append(InstructionFactory.ISUB);		// current time - start current time
+		dopo.append(InstructionFactory.ISUB);		// current time - start current time		
 		dopo.append(new ISTORE(index));				// result -> index
 		
 		// append time

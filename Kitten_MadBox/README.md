@@ -1,11 +1,4 @@
-#Kitten
+Kitten
+======
 
-di Luca Vicentini & Matteo Dal Monte
-
- & Kevin Mansoldo
-> Elaborato di Compilatori
-
-> Anno accademico 2014 / 2015
-
-
-> prof. Fausto Spoto
+A simple compiler for a Java-like object-oriented language

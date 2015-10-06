@@ -35,9 +35,9 @@ public class Assert extends Command {
 		// the condition of the assert must be a Boolean expression
 		condition.mustBeBoolean(checker);
 		if(!checker.isAssertOk())
-			error("assert fallita!");
+			error("Assert deve essere contenuta in un Test!");
 
-			return checker;
+		return checker;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class Assert extends Command {
 	
 		failed = new VIRTUALCALL(ClassType.mkFromFileName("String.kit"),
 				ClassType.mkFromFileName("String.kit").methodLookup("output", TypeList.EMPTY)).followedBy(failed);
-		failed = new NEWSTRING("assert " + out + "\n").followedBy(failed);
+		failed = new NEWSTRING("- ASSERT " + out + "\n").followedBy(failed);
 		failed = new NEWSTRING(out).followedBy(failed);
 		
 		return condition.translateAsTest(continuation, failed);

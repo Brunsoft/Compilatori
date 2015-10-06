@@ -1,8 +1,8 @@
 digraph "Miao.seconda=test" {
 size = "11,7.5";
-codeblock_12 [ shape = box, label = "block 12\nload 0 of type Miao\ngetfield Miao.val:String\nnewstring Test Seconda\ncall String.equals(String):boolean [String.equals(String):boolean]"];
-codeblock_11 [ shape = box, label = "block 11\nif_false\nnewstring failed at 21.3\nnewstring assert failed at 21.3\\n\ncall String.output():void [String.output():void]\nreturn String"];
-codeblock_12->codeblock_11 [color = blue label = "" fontsize = 8]
-codeblock_10 [ shape = box, label = "block 10\nif_true\nnewstring 	- TestSeconda \nnewstring  OK\\n\ncall String.concat(String):String [String.concat(String):String]\ncall String.output():void [String.output():void]\nnewstring passed\nreturn String"];
-codeblock_12->codeblock_10 [color = blue label = "" fontsize = 8]
+codeblock_14 [ shape = box, label = "block 14\nload 0 of type Miao\ngetfield Miao.val:String\nnewstring Test Seconda\ncall String.equals(String):boolean [String.equals(String):boolean]"];
+codeblock_13 [ shape = box, label = "block 13\nif_false\nnewstring failed at 21.3\nnewstring - ASSERT failed at 21.3\\n\ncall String.output():void [String.output():void]\nreturn String"];
+codeblock_14->codeblock_13 [color = blue label = "" fontsize = 8]
+codeblock_12 [ shape = box, label = "block 12\nif_true\nnewstring - TEST DUE \nnewstring  OK\\n\ncall String.concat(String):String [String.concat(String):String]\ncall String.output():void [String.output():void]\nnewstring passed\nreturn String"];
+codeblock_14->codeblock_12 [color = blue label = "" fontsize = 8]
 }
